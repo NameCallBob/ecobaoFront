@@ -1,38 +1,394 @@
-.App {
-  text-align: center;
+img{
+  margin: auto;
+  display: block;
+}
+td{
+  /* text-align: center; */
+  vertical-align: middle;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* 輸入格式錯誤 */
+/* .input-err-message{
+  color: rgb(255, 45, 45);
 }
+.input-err-message::before{
+  display: inline;
+  content: '❗️'
+} */
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+/* 頁尾 */
+.footer{
+  margin-top: 2%;
+  padding:2% 0 2% 0;
+  background-color: #255247;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+/* customer */
+/* 頁首 */
+.nav-brand{
+  font-size: 30px;
+}
+.nav-to-profile{
+  color: #44af61;
+}
+.footer-link{
+  color: #FFF;
+}
+.footer-link:hover{
+  color: rgb(207, 207, 207)
+}
+.footer-link:active{
+  color: rgb(192, 192, 192)
+}
+.footer-icon{
+  margin-left: 30px;
+}
+.navbar-div{
+  max-width: 100%;
+  max-height: 100%;
+  margin: 1%;
+  height: 4rem;
+}
+.store-navbar-div{
+  max-width: 100%;
+  max-height: 100%;
+  margin: 1%;
+  height: 7rem;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* slick SimpleSlider.js */
+.home-slider{
+  margin: auto;
+  display: block;
+  width: 98%;
+  margin-bottom: 2%;
+}
+
+/* LogIn */
+.login-div{
+  margin: 3% 2% 5% 2%;
+}
+.home-login-title{
+  text-align: center;
+}
+.login-btn{
+  margin: auto;
+  display: block;
+}
+.login-card-title{
+  text-align: center;
+}
+.login-card{
+  width: 35rem;
+}
+
+/* LoginPage */
+.login-page{
+  margin: 5% 5% 5% 5%;
+  padding: 10% 5% 10% 5%;
+  border: #255247 solid;
+  border-radius: 5px;
+}
+.login-page-inside-div{
+  padding: 5%;
+  text-align: right;
+}
+.login-pic{
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/* About */
+.about{
+  margin: 5% 10% 5% 10%;
+}
+.about-list-group{
+  margin-top: 10%;
+  margin-bottom: 5%;
+}
+.subject-h1{
+  text-align: center;
+  margin-bottom: 3%;
+}
+.about-right-div{
+  background-color: rgba(128, 128, 128, 0.05);
+}
+.vision-container{
+  padding: 5% 3% 5% 3%;
+}
+.ecobao{
+  margin: 5% 0 5% 0;
+}
+.sdgs-head-div{
+  margin: 5% 0 5% 0;
+}
+.sdgs-head{
+  width: 80%;
+}
+.sdgs{
+  margin-bottom: 5%;
+}
+.about-builder-h2{
+  margin-top: 3%;
+  margin-bottom: 5%;
+}
+
+/* notFound */
+.notfound-h1{
+  text-align: center;
+  margin-top: 10%;
+  margin-bottom: 10%;
+}
+.notfound-link{
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 12%;
+}
+
+/* SignIn */
+.signIn-card{
+  margin: 5% 10% 10% 10%;
+}
+.signIn-row{
+  margin: 10%;
+}
+.signIn-img{
+  margin: auto;
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+}
+.signIn-back-login{
+  margin-top: 5%;
+}
+.allergy-div{
+  margin-top: 5%;
+}
+.register-img{
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/* Activity */
+.activity-div{
+  margin: 5% 10% 5% 10%;
+}
+.activityBuilder-img{
+  margin-bottom: 5%;
+}
+.activity-annotation{
+  color: gray;
+  font-size: 15px;
+}
+.activity-item-p{
+  font-size: 18px;
+}
+.activity-item-img{
+  max-width: 50%;
+  margin: auto;
+  display: block;
+  margin-top: 3%;
+  margin-bottom: 3%;
+}
+.single-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.activity-multiline-ellipsis{
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+
+/* QA */
+.QA-div{
+  margin: 5% 10% 5% 10%;
+}
+.QA-div-card{
+  margin: 0 0 5% 0;
+}
+
+/* menu */
+.menu{
+  margin: 5% 5% 5% 5%;
+}
+.map{
+  height: 20rem;
+}
+.food-type-container{
+  margin-bottom: 1rem; 
+}
+.food-type-list{
+  text-align: center;
+}
+.type-img{
+  width: 50%;
+  transition: box-shadow .25s;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+.type-img:hover{
+  transition: box-shadow .25s;
+  box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.food-type-name{
+  font-size: 18px;
+}
+.pagination-bar{
+  margin-top: 5%;
+  margin-left: 25%;
+}
+.menu-link-to-store{
+  text-decoration: none;
+}
+.menu-card-title{
+  text-align: center;
+}
+.map-container{
+  width: 100%;
+  height: 60vh;
+}
+.menu-store-list{
+  transition: box-shadow .25s;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+.menu-store-list:hover{
+  transition: box-shadow .25s;
+  box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+
+
+/* store */
+.store{
+  margin-top: 5%;
+}
+.store-link{
+  color: rgb(127, 127, 127);
+  margin-right: 2%;
+}
+.store-link:hover{
+  color: rgb(112, 112, 112)
+}
+.store-link:active{
+  color: rgb(104, 104, 104)
+}
+
+/* cart */
+.cart{
+  margin: 5% 5% 10% 5%;
+}
+.cart-buy-button{
+  margin-left: 80%;
+}
+.cart-th{
+  text-align: center;
+}
+.cart-checkbox{
+  text-align: center;
+
+}
+.cart-total{
+  font-size: x-large;
+}
+.coupon-select{
+  margin-bottom: 2%;
+  width: 20rem;
+}
+
+/* userProfile */
+.user-profile{
+  margin: 5% 5% 2% 5%;
+}
+.user-profile-list-group{
+  margin-bottom: 5%;
+}
+.profile-img{
+  width: 80%;
+}
+
+/* myProfile */
+.myprofile{
+  padding: 5% 0 10% 0;
+}
+
+/* userOrder */
+.userOrder{
+  margin: 5% 5% 10% 5%;
+}
+
+
+/* store */
+
+/* store-register */
+.store-signIn-card{
+  margin: 10% 5% 5% 5%;
+  padding: 5% 5% 5% 5%;
+}
+/* storeIndex */
+.storeIndex{
+  margin: 5%;
+}
+.storeImg{
+  width: 80%;
+}
+.storeIndexButton{
+  margin-top: 5%;
+}
+
+/* storeProduct */
+.store-product-div{
+  margin: 5% 0 5% 0;
+}
+.store-product-buttons{
+  margin: auto;
+  display: block;
+}
+
+/* storeAddNewProduct */
+.store-add-new-product{
+  margin: 5% 10% 5% 10%;
+}
+
+/* StoreCustomerFeedback */
+.customer-feedback{
+  margin: 5% 5% 5%;
+}
+/* storeMealEdit */
+.piece{
+  font-size: x-large;
+  margin: 0 10px 0 10px;
+}
+
+
+
+/* Map */
+.map-outside-div{
+  margin-bottom: 2%;
+}
+.map-div{
+  position: relative;
+}
+
+/* get-user-location */
+.gps-button-div{
+  position: absolute;
+  z-index: 1;
+  margin-left: 96.1%;
+  margin-top: 12rem;
+}
+.gps-button{
+  background-color: white;
+  border: none;
+  outline: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 2px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+  cursor: pointer;
+  margin-right: 10px;
+  padding: 0;
 }
