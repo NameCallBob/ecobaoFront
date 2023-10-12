@@ -22,17 +22,19 @@ function LoginPage() {
             password: passwd
         }))
         .then((res)=>{
-            if (res.status=== 200){
+            if (res.status === 200){
                 alert("登入成功")
                 window.localStorage.setItem('jwt',res.data['access'])
                 AfterofLoginClickHandler()
             }
-            else if (res.status === 404){
-                alert("登入失敗")
-            }
         })
         .catch((err)=>{
-            console.log(err)
+            // 若出現Axios錯誤
+            let error = err.response
+            if (error.status === 401){
+                alert('帳號或密碼錯誤')
+                //警示錯誤，請使用者重新輸入
+            }
         })
     }
   return (

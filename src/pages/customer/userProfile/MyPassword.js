@@ -2,13 +2,35 @@ import React from 'react'
 import { Col, Container, Row, Image, Form, Button } from 'react-bootstrap'
 import * as formik from 'formik';
 import * as yup from 'yup';
+import Axios from '../../../components/Axios';
 
 function MyPassword() {
     const { Formik } = formik
     const schema = yup.object({
+        passwd: yup.string().required("欄位不得為空"),
         newPasswd: yup.string().min(8,"長度不得小於8碼").required("欄位不得為空"),
         confirmNewPasswd: yup.string().oneOf([yup.ref("newPasswd")], "密碼匹配不一致"),
     });
+
+    const dataToBack = (values) =>{
+        const action = 'memberP/password_upd/'
+        Axios().post(action, JSON.stringify({
+            old_password: values.passwd,
+            new_password: values.newPasswd,
+        }))
+        .then((res)=>{
+            if(res.status === 200){
+                alert('密碼修改成功')
+            }
+            else{
+                alert('密碼錯誤')
+            }
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
+    }
+
 
   return (
     <Container fluid className='myprofile'>
@@ -22,9 +44,10 @@ function MyPassword() {
                  validationSchema={schema}
                  onSubmit={(values) => {
                     console.log(values)
+                    dataToBack(values)
                   }}
                   initialValues={{
-                    passwd: '12345678',
+                    passwd: '',
                     newPasswd: '',
                     confirmNewPasswd: '',
                   }}
@@ -36,9 +59,14 @@ function MyPassword() {
                             <Form.Control 
                              type="text" 
                              name= 'passwd'
-                             defaultValue={values.passwd}
-                             readOnly
+                             value={values.passwd}
+                             onChange={handleChange}
+                             isInvalid={!!errors.passwd}
+                             required
                             />
+                            <Form.Control.Feedback type='invalid'>
+                                {errors.passwd}
+                            </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label>新密碼</Form.Label>

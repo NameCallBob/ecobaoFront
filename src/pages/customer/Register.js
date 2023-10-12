@@ -27,7 +27,7 @@ function Register() {
     });
     const {data: allergen} = useFetch("http://localhost:8002/foodAllergen")
     const [changepage, setChangePage] = useState(false)
-    const [switchState, setSwitchState] = useState(false);
+    const [switchState, setSwitchState] = useState(false)
     
     function datatoback({values={}}){
         let data = {
@@ -51,35 +51,13 @@ function Register() {
         .catch((err)=>{
             console.log(err)
         })
-
-
     }
-    // 資料
-    
-
-
     // 註冊後回到商店選擇頁面
     const AfterofRegisterClickHandler = () =>{
         alert("註冊成功")
         const w=window.open("/LoginPage",'_self')
         // w.location.href="/LoginPage"
     }
-    // 回傳登入資料
-    // const action = 
-    // const handleSubmit = (e) =>{
-    //     e.preventDefault()
-    //     Axios().post(action, JSON.stringify(userRegisterData))
-    //     .then(()=>{
-    //         console.log(200)
-    //         AfterofRegisterClickHandler()
-    //     }
-    //     )
-    //     .catch((err)=>{
-    //         console.log(err)
-    //     }   
-    //     )
-    //     // console.log(e)
-    // }
 
 
 
