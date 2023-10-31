@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useFetcher } from 'react-router-dom'
 import { Button, Col, Container, Image, Row } from 'react-bootstrap'
+import useFetch from '../hooks/useFetch'
 
 
 function ActivityBuilder({data}) {
@@ -11,7 +12,16 @@ function ActivityBuilder({data}) {
     const [img, setImg] = useState(null)
     const [date, setDate] = useState(null)
     const [link, setLink] = useState(null)
-    console.log(actid)
+    const [serverUrl, setServerUrl] = useState(null)
+    const { data: serverURL } = useFetch("http://localhost:8002/serverURL")
+  
+    useEffect(() => {
+      if (serverURL && serverURL.length > 0) {
+        const firstServerURL = serverURL[0].serverurl
+        setServerUrl(firstServerURL)
+      }
+    }, [serverURL])
+
     useEffect(()=>{
       setActid(data.actid)
       setTitle(data.title)
@@ -26,7 +36,7 @@ function ActivityBuilder({data}) {
     <Row>
         <Col xs={12} md={4}>
           <div className='activityBuilder-img'>
-            <Image src={img} rounded fluid/>
+            <Image src={`${serverUrl}${img}`} rounded fluid/>
           </div>
         </Col>
         <Col xs={12} md={8}>

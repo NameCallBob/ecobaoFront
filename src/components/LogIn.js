@@ -1,11 +1,13 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { CardGroup, Container } from 'react-bootstrap'
 import LoginCard from './LoginCard'
+import useFetch from '../hooks/useFetch'
 
 /***
  *使用者＋商家的登入group
  ***/
 function LogIn() {
+
   return (
     <div className='login-div'>
       <Container fulid>

@@ -2,10 +2,10 @@ import React from 'react'
 import { Image, Col } from 'react-bootstrap'
 
 
-function EmptyState() {
+function EmptyState({src}) {
   return (
     <Col xs={12} md={12}>
-    <Image src='https://i.imgur.com/J9QnVAy.png' rounded fluid/>
+    <Image src={src} rounded fluid/>
     </Col>
   )
 }

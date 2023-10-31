@@ -47,7 +47,6 @@ function MyProfile() {
             setBirth(data.birth)
             setPhone(data.phone)
             setAddress(data.address)
-            console.log(data)
         })
         .catch((err)=>{
             let error = err.response

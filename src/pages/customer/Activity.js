@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Button, Col, Container, Image, Row } from 'react-bootstrap'
+import { Container } from 'react-bootstrap'
 import KanBan from '../../components/KanBan'
 import ActivityBuilder from '../../components/ActivityBuilder'
 import Axios from '../../components/Axios'

@@ -8,22 +8,19 @@ import useFetch from '../hooks/useFetch'
 ***/
 function SimpleSlider() {
   const {data: slideImg} = useFetch("http://localhost:8002/sliderImg")
-
+  
   return (
-    // <div className='home-slider'>
-        <Container fluid>
-            {/* 投影片輪播 */}
-            <Carousel>
-              {slideImg &&
-              slideImg.map((item)=>(
-              <Carousel.Item key={item.id}>
-                  <Image src={item.url} alt={item.title} fluid/>
-              </Carousel.Item>
-              ))
-              }
-            </Carousel>
-        </Container>
-    // </div>
+    <Container fluid>
+      <Carousel>
+        {slideImg &&
+        slideImg.map((item)=>(
+        <Carousel.Item key={item.id}>
+            <Image src={item.url} alt={item.title} fluid/>
+        </Carousel.Item>
+        ))
+        }
+      </Carousel>
+    </Container>
   )
 }
 

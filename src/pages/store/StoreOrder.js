@@ -1,71 +1,215 @@
-import React from 'react'
-import StoreKanBan from '../../components/StoreKanBan'
-import { Button, Container, Table } from 'react-bootstrap'
+// StoreOrder.js
+import React, { useEffect, useState } from 'react';
+import StoreKanBan from '../../components/StoreKanBan';
+import { Container, Card } from 'react-bootstrap';
+import { Space, Button, Table } from 'antd';
+import Axios from '../../components/Axios';
+import StoreCancelOrder from '../../components/StoreCancelOrder';
 
-/*** 
- * 商家接收訂單頁面
- ***/
 function StoreOrder() {
-  const testData = {
-    id: "A001",
-    item: "炸雞桶",
-    customer: "楊兆彬",
-    price: 100,
-    amount: 1,
-  }
-  const testData2 = {
-    id: "A000",
-    item: "炸雞腿",
-    customer: "binbin",
-    price: 200,
-    amount: 1,
-  }
+  const [dataSource, setDataSource] = useState(null);
+  const [selectedOrderId, setSelectedOrderId] = useState(null);
+
+  const getOrder = () => {
+    Axios()
+      .get('/orderv/all/')
+      .then((res) => {
+        let data = res.data;
+        const filterData = data.filter(item => {
+          const status = item.status;
+          return status === '未接單' || status === '已接單' || status === '未取餐';
+        });
+        setDataSource(filterData);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleAcceptOrder = (record) => {
+    Axios()
+      .post('/order/accept/', JSON.stringify({
+        oid: record.oid,
+      }))
+      .then((response) => {
+        if (response.status === 200) {
+          const updatedDataSource = dataSource.map((item) => {
+            if (item.oid === record.oid) {
+              if (item.status === '未接單') {
+                item.status = '已接單';
+              } else if (item.status === '已接單') {
+                item.status = '未取餐';
+              } else if (item.status === '未取餐') {
+                item.status = '已完成';
+                // 2秒後會自動在頁面刪除
+                setTimeout(() => {
+                  const updatedData = dataSource.filter((item) => item.oid !== record.oid);
+                  setDataSource(updatedData);
+                }, 2000);
+              }
+            }
+            return item;
+          });
+          setDataSource(updatedDataSource);
+        }
+      })
+      .catch((error) => {
+        console.error("接單失敗", error);
+      });
+  };
+
+  const handleCancelOrder = (record) => {
+    setSelectedOrderId(record.oid);
+  };
+
+  const removeCancelledOrder = (orderId) => {
+    const updatedDataSource = dataSource.map((item) => {
+      if (item.oid === orderId && item.status === '未取餐') {
+        setTimeout(() => {
+          const updatedData = dataSource.filter((item) => item.oid !== orderId);
+          setDataSource(updatedData);
+        }, 2000);
+      }
+      return item;
+    });
+    setDataSource(updatedDataSource);
+  };
+
+  useEffect(() => {
+    getOrder();
+  }, []);
+
+  const columns = [
+    {
+      title: '#',
+      dataIndex: 'oid',
+      key: 'oid',
+    },
+    {
+      title: '品名',
+      dataIndex: 'orderfoods',
+      key: 'orderfoods',
+      render: (orderfoods) => (
+        <>
+          {orderfoods.map((item, index) => (
+            <p key={index}>{item.goods_name}</p>
+          ))}
+        </>
+      ),
+    },
+    {
+      title: '價格',
+      dataIndex: 'orderfoods',
+      key: 'orderfoods',
+      render: (orderfoods) => (
+        <>
+          {orderfoods.map((item, index) => (
+            <p key={index}>{item.subtotal}</p>
+          ))}
+        </>
+      ),
+    },
+    {
+      title: '數量',
+      dataIndex: 'orderfoods',
+      key: 'orderfoods',
+      render: (orderfoods) => (
+        <>
+          {orderfoods.map((item, index) => (
+            <p key={index}>{item.quantity}</p>
+          ))}
+        </>
+      ),
+    },
+    {
+      title: '付款方式',
+      dataIndex: 'orderpayments',
+      key: 'orderpayments',
+      render: (orderpayments) => (
+        <span>{orderpayments[0].method}</span>
+      ),
+    },
+    {
+      title: '總金額',
+      dataIndex: 'total',
+      key: 'total',
+    },
+    {
+      title: '訂單狀態',
+      dataIndex: 'status',
+      key: 'status',
+    },
+    {
+      title: "操作",
+      render: (record) => (
+        <Space>
+          {record.status === '未接單' && (
+            <Button
+              type="primary"
+              ghost
+              onClick={() => handleAcceptOrder(record)}
+            >
+              接單
+            </Button>
+          )}
+          {record.status === '已接單' && (
+            <Button
+              type="primary"
+              ghost
+              onClick={() => handleAcceptOrder(record)}
+            >
+              通知顧客可取餐
+            </Button>
+          )}
+          {record.status === '未取餐' && (
+            <Button
+              type="primary"
+              ghost
+              onClick={() => handleAcceptOrder(record)}
+            >
+              完成訂單
+            </Button>
+          )}
+          <Button
+            type="primary"
+            danger
+            ghost
+            onClick={() => handleCancelOrder(record)}
+          >
+            取消
+          </Button>
+        </Space>
+      ),
+    },
+  ];
+
   return (
     <>
-    <StoreKanBan/>
-    <div className='storeIndex'>
-      <Container fulid>
-        <h1>待處理訂單</h1>
-        <Table bordered hover striped size="sm">
-          <thead className='cart-th'>
-            <tr>
-              <th>訂單編號</th>
-              <th>訂購產品</th>
-              <th>訂購人</th>
-              <th>數量</th>
-              <th>金額</th>
-              <th>訂單狀況</th>
-              <th>成立時間</th>
-              <th>操作</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>{testData.id}</td>
-              <td>{testData.item}</td>
-              <td>{testData.customer}</td>
-              <td>{testData.amount}</td>
-              <td>{testData.price}</td>
-              <td>未接單</td>
-              <td>08/31 15:00</td>
-              <td><Button>接受</Button><p></p><Button variant='danger'>拒絕</Button></td>
-            </tr>
-            <tr>
-              <td>{testData2.id}</td>
-              <td>{testData2.item}</td>
-              <td>{testData2.customer}</td>
-              <td>{testData2.amount}</td>
-              <td>{testData2.price}</td>
-              <td>已接單</td>
-              <td>08/31 14:30</td>
-              <td><Button variant='success'>完成訂單</Button></td>
-            </tr>
-          </tbody>
-        </Table>
-      </Container>
-    </div>
+      <StoreKanBan />
+      <div className='storeIndex'>
+        <Container fulid>
+          <h1>待處理訂單</h1>
+          <div className='order-div'>
+            {dataSource ?
+             <Table dataSource={dataSource} columns={columns} />
+             :
+             <Card>
+                <Card.Body>
+                    <Card.Title>目前無任何訂單喔～</Card.Title>
+                </Card.Body>
+              </Card>
+            }
+          </div>
+        </Container>
+      </div>
+      <StoreCancelOrder
+        visible={!!selectedOrderId}
+        onCancel={() => setSelectedOrderId(null)}
+        orderId={selectedOrderId}
+        onOrderCancelled={removeCancelledOrder}
+      />
     </>
-  )
+  );
 }
 
-export default StoreOrder
+export default StoreOrder;

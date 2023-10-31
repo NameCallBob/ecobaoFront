@@ -31,6 +31,10 @@ function FoodTypeSelect({setType,setWebaction}) {
         <div>
             <div className='food-type-list'>
                 <Slider {...settings}>
+                    <div className='select-type' key={0} onClick={handlerOnclick}>
+                        <Image src={'https://i.imgur.com/c8f8XVR.png'} alt={'all'} className='type-img' rounded/>
+                        <span className='food-type-name'>All</span>
+                    </div>
                     {foodType &&
                     foodType.map((item)=>(
                     <div className='select-type' key={item.id} onClick={handlerOnclick}>

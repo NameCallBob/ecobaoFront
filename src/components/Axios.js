@@ -1,16 +1,19 @@
 import axios from "axios"
+import { useNavigate , Navigate } from "react-router-dom"
+
 
 
 
 function Axios(){
+  // const navigate = useNavigate()
   if (window.localStorage.getItem('jwt') === null){
   window.localStorage.setItem('jwt','None')
   }
   let jwt = `Bearer ${(window.localStorage.getItem('jwt'))}`
   const res = axios.create(
     {
-      baseURL: 'https://dd38-61-216-112-120.ngrok-free.app',
-      timeout:5000,
+      baseURL: 'https://2eec-1-174-137-88.ngrok-free.app/',
+      timeout:10000,
       headers:{
         'ngrok-skip-browser-warning':'123',
         'Authorization':jwt,
@@ -19,7 +22,22 @@ function Axios(){
       }
     }
   )
-  return  res
+
+  // 攔截器，攔截jwtToken失效
+  res.interceptors.response.use(
+    function (res) {
+      return res;
+    },
+    function (err) {
+      if (err.response && err.response.status === 401) {
+        alert("您的憑證已失效，請重新登入");
+        <Navigate to="/LoginPage"/>;
+      }
+      return Promise.reject(err);
+    }
+  );
+  return res;
 }
+
 
 export default Axios

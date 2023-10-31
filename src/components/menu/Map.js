@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { GoogleMap, useLoadScript, MarkerF, InfoWindowF } from '@react-google-maps/api';
 import GetUserLocation from './GetUserLocation';
 import { Container } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 /***
  * 地圖
@@ -66,9 +67,11 @@ function Map({data}) {
                   <MarkerF key={id} position={position} onClick={() => handleActiveMarker(id, name)}>
                     {activeMarker === id ? (
                     <InfoWindowF onCloseClick={() => setActiveMarker(null)}>
-                      <div>{name}</div>
+                      <div>
+                        <Link to={`/store/${id}`}>{name}</Link>  
+                      </div>
                     </InfoWindowF>
-                  ) : null}
+                    ) : null}
                   </MarkerF>
                 )
               })}

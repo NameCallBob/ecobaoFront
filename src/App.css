@@ -7,14 +7,6 @@ td{
   vertical-align: middle;
 }
 
-/* 輸入格式錯誤 */
-/* .input-err-message{
-  color: rgb(255, 45, 45);
-}
-.input-err-message::before{
-  display: inline;
-  content: '❗️'
-} */
 
 /* 頁尾 */
 .footer{
@@ -31,6 +23,8 @@ td{
 }
 .nav-to-profile{
   color: #44af61;
+  font-size: 18px;
+  text-decoration: none;
 }
 .footer-link{
   color: #FFF;
@@ -203,6 +197,10 @@ td{
   overflow: hidden;
 }
 
+/* checkout-page */
+.checkout-page{
+  margin-bottom: 5%;
+}
 
 /* QA */
 .QA-div{
@@ -260,8 +258,6 @@ td{
   box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-
-
 /* store */
 .store{
   margin-top: 5%;
@@ -275,6 +271,18 @@ td{
 }
 .store-link:active{
   color: rgb(104, 104, 104)
+}
+.store-img{
+  max-width: 100%;
+  width: 80%;
+  margin: auto;
+  display: block;
+}
+.food-card{
+  height: 100%;
+}
+.food-card-img{
+  height: 80%;
 }
 
 /* cart */
@@ -297,6 +305,17 @@ td{
 .coupon-select{
   margin-bottom: 2%;
   width: 20rem;
+}
+
+/* bill */
+.bill{
+  margin: 5% 5% 10% 5%;
+}
+.checkout-steps{
+  margin: 5%;
+}
+.checkout-content{
+  margin: 5% 3%;
 }
 
 /* userProfile */
@@ -347,6 +366,10 @@ td{
   margin: auto;
   display: block;
 }
+.store-product-card-img{
+  width : 100% ; 
+  height : 15vw ;
+}
 
 /* storeAddNewProduct */
 .store-add-new-product{
@@ -355,14 +378,19 @@ td{
 
 /* StoreCustomerFeedback */
 .customer-feedback{
-  margin: 5% 5% 5%;
+  margin: 5% 10% 5% 10%;
 }
 /* storeMealEdit */
 .piece{
   font-size: x-large;
   margin: 0 10px 0 10px;
 }
-
+.store-meal-edit-card-img{
+  width : 50% ; 
+}
+.quantity{
+  margin: 0 2% 0 2%;
+}
 
 
 /* Map */

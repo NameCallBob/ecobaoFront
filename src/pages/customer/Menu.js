@@ -8,6 +8,8 @@ import Axios from '../../components/Axios';
 import MenuStoreList from '../../components/menu/MenuStoreList';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import EmptyState from '../../components/menu/EmptyState';
+import useFetch from '../../hooks/useFetch';
+import WaitAMin from '../../components/WaitAMin';
 
 function Menu() {
     const [type, setType] = useState(null)
@@ -15,6 +17,8 @@ function Menu() {
     const [webaction , setWebaction] = useState(null)
     const [data, setData] = useState(null)
 
+
+    // 從後端抓取商家資料
     function get_backdata(webaction = null , type = null , search = null){
         let action = 'store_sch/'
         let params = {
@@ -53,6 +57,7 @@ function Menu() {
     },[type,search])
 
 
+
   return (
     <>
     <KanBan/>
@@ -72,10 +77,10 @@ function Menu() {
                 {/* 商店 */}
                 <Container>
                     <Row xs={2} md={3} className="g-4">
-                        {data && data.length?  
+                        {data && data.length?
                         data.map((object) => (<MenuStoreList object={object}/>))
                         :
-                        <EmptyState/>
+                        <EmptyState src={'https://i.imgur.com/J9QnVAy.png'}/>
                         }
                     </Row>
                 </Container>

@@ -43,7 +43,7 @@ function MyPassword() {
                 <Formik
                  validationSchema={schema}
                  onSubmit={(values) => {
-                    console.log(values)
+                    // console.log(values)
                     dataToBack(values)
                   }}
                   initialValues={{

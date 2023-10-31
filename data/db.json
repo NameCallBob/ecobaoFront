@@ -1,4 +1,9 @@
 {
+    "serverURL":[
+        {
+            "serverurl": "https://2eec-1-174-137-88.ngrok-free.app"
+        }
+    ],
     "sliderImg":[
         {
             "title": "silder01",
@@ -109,6 +114,11 @@
             "id": 7,
             "ft": "手搖飲",
             "img":"https://i.imgur.com/nN9KhF3.png"
+        },
+        {
+            "id": 8,
+            "ft": "炸物",
+            "img": "https://i.imgur.com/6dQ4F1o.png"
         }
     ],
     "foodAllergen":[

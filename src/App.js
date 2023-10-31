@@ -24,6 +24,8 @@ import StoreCustomerFeedback from './pages/store/StoreCustomerFeedback';
 import Activity from './pages/customer/Activity';
 import ActivityPage from './pages/customer/activity/ActivityPage';
 import PasswdTest from './components/PasswdTest';
+import CheckOutPage from './pages/customer/CheckOutPage';
+
 
 /*** 
  * 要使用時要啟動：
@@ -64,10 +66,11 @@ function App() {
           <Route path='/Activity' element={<Activity/>} />
           <Route path='/CommonQA' element={<CommonQA/>} />
           <Route path='/Menu' element={<Menu/>} />
-          <Route path='/store' element={<Store/>} />
+          <Route path='/store/:sid' element={<Store/>} />
           <Route path='/cart' element={<Cart/>} />
           <Route path='/UserProfile' element={<UserProfile/>} />
           <Route path='/orders' element={<UserOrder/>} />
+          <Route path='/checkout' element={<CheckOutPage/>}/>
           <Route path='/activity/:actid' element={<ActivityPage/>}/>
           {/* store */}
           <Route path='/StoreIndex' element={<StoreIndex/>} />

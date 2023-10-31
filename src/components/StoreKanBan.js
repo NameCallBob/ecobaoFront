@@ -1,9 +1,17 @@
 import React from 'react'
 import { Container, Nav, Navbar } from 'react-bootstrap'
 import { BiStoreAlt } from 'react-icons/bi'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 function StoreKanBan() {
+  const navigate = useNavigate();
+
+  const LogOut = () => {
+    window.localStorage.removeItem('jwt');
+    alert('您已登出');
+    navigate('/');
+    window.location.reload();
+  }
   return (
     <div>
     <Navbar expand="lg" className="bg-body-tertiary" bg="light" data-bs-theme="light" fixed='top'>
@@ -29,7 +37,7 @@ function StoreKanBan() {
             <Nav.Link href="/StoreOrder">訂單管理</Nav.Link>
             <Nav.Link href="/StoreOrderHistory">歷史訂單查詢</Nav.Link>
             <Nav.Link href="/StoreCustomerFeedback">評價查詢</Nav.Link>
-            <Link to="/StoreLoginPage" className='nav-to-profile'><BiStoreAlt size={40}/></Link>
+            <Nav.Link href="/" onClick={()=>LogOut()}>登出</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
