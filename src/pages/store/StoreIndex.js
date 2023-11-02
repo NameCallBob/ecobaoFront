@@ -1,8 +1,10 @@
 import React,{ useState, useEffect } from 'react'
 import { Button, Col, Container, Form, Image, Row } from 'react-bootstrap'
+import { Rating } from '@mui/material'
 import StoreKanBan from '../../components/StoreKanBan'
 import Axios from '../../components/Axios'
-
+import useFetch from '../../hooks/useFetch';
+import { message } from 'antd'
 
 function StoreIndex() {
   const [pic, setPic] = useState()
@@ -15,15 +17,39 @@ function StoreIndex() {
   const [link_ig, setLink_ig] = useState()
   const [intro, setIntro] = useState()
   const [rating, setRating] = useState()
+  const [storePicInLeft, setStorePicInLeft] = useState()
+  // url
+  const [serverUrl, setServerUrl] = useState(null)
+  const { data: serverURL } = useFetch("http://localhost:8002/serverURL")
+  // url
+  useEffect(() => {
+    if (serverURL && serverURL.length > 0) {
+      const firstServerURL = serverURL[0].serverurl
+      setServerUrl(firstServerURL)
+    }
+  }, [serverURL])
+  const handlePicUpload = (event) => {
+    const file = event.target.files[0]
+    const reader = new FileReader()
+    reader.onloadend = function () {
+      setPic(reader.result)
+    };
+    if (file) {
+      reader.readAsDataURL(file)
+    }
+  }
 
   const submitHandler = () =>{
     Axios().post('/store_data/change/', JSON.stringify({
+      pic: pic,
       link_fb: link_fb,
       link_ig: link_ig,
       intro: intro,
     }))
     .then((res)=>{
       console.log(res)
+      alert('儲存成功')
+      window.location.reload()
     })
     .catch((err)=>{
       console.log(err)
@@ -43,6 +69,7 @@ function StoreIndex() {
             setLink_fb(data[0].link_fb)
             setLink_ig(data[0].link_ig)
             setIntro(data[0].intro)
+            setStorePicInLeft(data[0].pic)
         }
     })
     .catch((err)=>{
@@ -53,8 +80,11 @@ function StoreIndex() {
     .then((res)=>{
       if(res.status === 200){
         let data = res.data
-        console.log(data)
+        setRating(data['rating'])
       }
+    })
+    .catch((err)=>{
+      console.log(err)
     })
   }
   useEffect(()=>{
@@ -67,11 +97,12 @@ function StoreIndex() {
       <Container fulid>
         <Row>
           <Col xs={12} sm={6} md={6}>
-            <Image src={pic} alt={pic} rounded className='storeImg'/> 
+            <Image src={`${serverUrl}${storePicInLeft}`} alt={name} rounded className='storeImg'/> 
           </Col>
 
           <Col xs={12} sm={6} md={6}>
               <h1>{name}</h1>
+              <Rating name="read-only" value={rating || 0} readOnly size='large' />
               <p>類型：{type}</p>
               <p>電話：{phone}</p>
               <p>Email：{email}</p>
@@ -79,13 +110,12 @@ function StoreIndex() {
             <Form>
             <Form.Group controlId="formFile" className="mb-3">
               <Form.Label>放入您的商家實照</Form.Label>
-              <Form.Control 
-                             type="file" 
-                             name='pic'
-                             values={pic}
-                             onChange={(e)=>setPic(e.target.value)}
-                             accept=".jpg, .jpeg, .png, .gif"
-                            />
+                <Form.Control 
+                  type="file" 
+                  name='food_pic'
+                  accept='image/*'
+                  onChange={handlePicUpload}
+                />
             </Form.Group>
               <Form.Group className="mb-3">
                   <Form.Label>FaceBook：</Form.Label>

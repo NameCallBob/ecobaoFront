@@ -50,12 +50,9 @@ function StoreAddNewMeal() {
   const handlePicUpload = (event) => {
     const file = event.target.files[0]
     const reader = new FileReader()
-
     reader.onloadend = function () {
       setimage(reader.result)
-      
     };
-
     if (file) {
       reader.readAsDataURL(file)
     }

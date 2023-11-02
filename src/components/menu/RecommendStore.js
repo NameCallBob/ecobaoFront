@@ -1,0 +1,70 @@
+import React, { useState, useEffect } from 'react'
+import Slider from 'react-slick'
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
+import { Image } from 'react-bootstrap'
+import Axios from '../../components/Axios'
+import useFetch from '../../hooks/useFetch';
+
+function RecommendStore() {
+    const [data, setData] = useState(null)
+    // url
+    const [serverUrl, setServerUrl] = useState(null)
+    const { data: serverURL } = useFetch("http://localhost:8002/serverURL")
+    // url
+    useEffect(() => {
+        if (serverURL && serverURL.length > 0) {
+        const firstServerURL = serverURL[0].serverurl
+        setServerUrl(firstServerURL)
+        }
+    }, [serverURL])
+
+    // react-slick 設定專區
+    const settings = {
+        dots: false,
+        infinite: false,
+        speed: 500,
+        slidesToShow: 5,
+        slidesToScroll: 5
+    }
+    const handlerOnclick = (e) =>{
+    console.log('ok')
+    }
+    console.log(data)
+    const getData = () =>{
+      Axios().get('/store_sch/prefer/')
+      .then((res)=>{
+        let data = res.data
+        setData(data)
+      })
+      .catch((err)=>{
+        console.log(err)
+      })
+    }
+    
+
+    useEffect(()=>{
+      getData()
+    },[])
+  return (
+    <div className='food-type-container'>
+        <h4>推薦店家</h4>
+        <div>
+            <div className='food-type-list'>
+                <Slider {...settings}>
+                    {data &&
+                     data.map((item)=>(
+                        <div className='select-type' key={item.upid} onClick={handlerOnclick}>
+                            <Image src={`${serverUrl}${item.pic}`} alt={item.name} className='type-img' rounded/>
+                            <span className='food-type-name'>{item.name}</span>
+                        </div>
+                     ))
+                    }
+                </Slider>
+            </div>
+        </div>
+    </div>
+  )
+}
+
+export default RecommendStore

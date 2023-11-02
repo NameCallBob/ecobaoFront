@@ -10,6 +10,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import EmptyState from '../../components/menu/EmptyState';
 import useFetch from '../../hooks/useFetch';
 import WaitAMin from '../../components/WaitAMin';
+import RecommendStore from '../../components/menu/RecommendStore';
 
 function Menu() {
     const [type, setType] = useState(null)
@@ -68,11 +69,13 @@ function Menu() {
                 {/* 搜尋欄 */}
                 <Search setSearch={setSearch} setWebaction={setWebaction} />
                 <hr />
-                {/* 食物類別 */}
-                <FoodTypeSelect setType={setType} setWebaction={setWebaction} />
-                <hr />
                 {/* 地圖 */}
-                {/* <Map data={data}/> */}
+                <Map data={data}/>
+                <hr />
+                <RecommendStore/>
+                <hr />
+                {/* 食物類別 */}
+                <FoodTypeSelect setType={setType} setWebaction={setWebaction} />                
                 <hr />
                 {/* 商店 */}
                 <Container>

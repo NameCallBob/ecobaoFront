@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Col, Card } from 'react-bootstrap'
 import { Link } from 'react-router-dom';
-import logo from '../../img/logo.png'
 import useFetch from '../../hooks/useFetch';
 
 

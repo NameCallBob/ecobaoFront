@@ -68,7 +68,9 @@ function Map({data}) {
                     {activeMarker === id ? (
                     <InfoWindowF onCloseClick={() => setActiveMarker(null)}>
                       <div>
-                        <Link to={`/store/${id}`}>{name}</Link>  
+                        {name}
+                        <br />
+                        <Link to={`/store/${id}`}>點我至商家頁面</Link>  
                       </div>
                     </InfoWindowF>
                     ) : null}

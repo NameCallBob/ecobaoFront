@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Container } from 'react-bootstrap'
-import { Table } from 'antd';
+import { Button, Container, Card } from 'react-bootstrap'
+import { Table, Tabs } from 'antd';
 import KanBan from '../../components/KanBan'
 import Axios from '../../components/Axios';
 import ReviewModal from '../../components/OrderReviewModal';
@@ -32,7 +32,13 @@ function UserOrder() {
     Axios().get('/orderv/all/')
   .then((res)=>{
     let data = res.data
-    setDataSource(data)
+    console.log(data)
+    if (data === "會員為建立任何訂單") {
+      setDataSource([])
+    }else{
+      setDataSource(data)
+    }
+    
   })
   .catch((err)=>{
     console.log(err)
@@ -115,6 +121,10 @@ function UserOrder() {
       )
     },
   ];
+  const { TabPane } = Tabs;
+  const filterOrdersByStatus = (orders, status) =>{
+    return orders.filter((order) => order.status === status);
+  }
 
   useEffect(()=>{
     getOrder()
@@ -127,10 +137,34 @@ function UserOrder() {
     <Container fulid>
       <h1>我的訂單</h1>
       <div className='order-div'>
-      {dataSource &&
-      <Table dataSource={dataSource} columns={columns} />
-      }
-      </div>
+            {dataSource && dataSource !== '會員未建立任何訂單紀錄'?
+              <div className='order-div'>
+                <Tabs defaultActiveKey="1">
+                  <TabPane tab="未接單" key="1">
+                    <Table dataSource={filterOrdersByStatus(dataSource, '未接單')} columns={columns} />
+                  </TabPane>
+                  <TabPane tab="已接單" key="2">
+                    <Table dataSource={filterOrdersByStatus(dataSource, '已接單')} columns={columns} />
+                  </TabPane>
+                  <TabPane tab="未取餐" key="3">
+                    <Table dataSource={filterOrdersByStatus(dataSource, '未取餐')} columns={columns} />
+                  </TabPane>
+                  <TabPane tab="已完成" key="4">
+                    <Table dataSource={filterOrdersByStatus(dataSource, '已完成')} columns={columns} />
+                  </TabPane>
+                  <TabPane tab="已取消" key="5">
+                    <Table dataSource={filterOrdersByStatus(dataSource, '已取消')} columns={columns} />
+                  </TabPane>
+                </Tabs>
+              </div>
+            :
+            <Card>
+              <Card.Body>
+                  <Card.Title>目前無任何歷史訂單</Card.Title>
+              </Card.Body>
+            </Card>
+            }
+        </div>
     </Container>
     <ReviewModal
       visible={isReviewModalVisible}

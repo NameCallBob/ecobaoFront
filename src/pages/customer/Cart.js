@@ -14,10 +14,11 @@ import { Link } from 'react-router-dom';
 function Cart() {
 
   const [itemQuantities, setItemQuantities] = useState({});
-  const [total, setTotal] = useState(0);
-  const [itemTotal, setItemTotal] = useState({});
+  const [total, setTotal] = useState(null);
   const [cartid, setCartid] = useState([]); // Array 來存儲選定商品的 cart_id
   const [dataSource, setDataSource] = useState(null);
+  console.log('total',total)
+  console.log('itemQuantities',itemQuantities)
 
   const buyClick = () => {
     // 在按下"購買"時，將所選商品的 cart_id 傳送到後端
@@ -37,9 +38,14 @@ function Cart() {
     Axios().get('/cart/get/')
       .then((res) => {
         if (res.status === 200) {
-          setDataSource(res.data)
           let data = res.data
-          console.log(data)
+          setDataSource(data)
+          // 在資料已載入後計算總金額
+          let caltotal = 0;
+          data.forEach((item) => {
+            caltotal += item.subtotal;
+          });
+          setTotal(caltotal);
         }
       })
       .catch((err) => {
@@ -48,31 +54,31 @@ function Cart() {
   };
 
   const handleQuantityChange = (itemId, newQuantity) => {
-    setItemQuantities({ ...itemQuantities, [itemId]: newQuantity })
-  }
+    // 找出目前商品的價格
+  const item = dataSource.find(item => item.cart_id === itemId);
+  const itemPrice = item ? item.price : 0;
 
-  const handleSelectForPurchase = (itemId) => {
-    // 按下 "購買" 按鈕時，將該商品的 cart_id 加入到 cartid Array
-    if (!cartid.includes(itemId)) {
-      setCartid([...cartid, itemId])
-    }
+  // 計算小計
+  const subtotal = newQuantity * itemPrice;
+
+  // 更新 itemQuantities
+  setItemQuantities({ ...itemQuantities, [itemId]: newQuantity });
+
+  // 更新 total
+  setTotal(prevTotal => {
+    // 找出原本的小計
+    const prevSubtotal = (itemQuantities[itemId] || 0) * itemPrice;
+    // 減去原本的小計，加上新的小計
+    return prevTotal - prevSubtotal + subtotal;
+  });
   }
 
   useEffect(() => {
     getToBack()
   }, [])
+
   
-  useEffect(() => {
-    if (dataSource) {
-      let totalAmount = 0
-      dataSource.forEach((item) => {
-        const quantity = itemQuantities[item.cart_id] || 0
-        totalAmount += quantity * item.price
-      })
-      setItemTotal(totalAmount)
-      setTotal(totalAmount)
-    }
-  }, [dataSource, itemQuantities])
+
 
   return (
     <>
