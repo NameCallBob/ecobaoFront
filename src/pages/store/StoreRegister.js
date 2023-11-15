@@ -1,15 +1,13 @@
 import React, { useState } from 'react'
-import { Card, Col, Container, Form, Row, Button, Image, Alert } from 'react-bootstrap'
+import { Card, Col, Container, Form, Row, Button, Image } from 'react-bootstrap'
 import logo from '../../img/logo.png'
-import { Link } from 'react-router-dom'
 import StoreKanBan from '../../components/StoreKanBan'
 import * as formik from 'formik';
 import * as yup from 'yup';
 import Axios from '../../components/Axios'
 
 function StoreRegister() {
-    const [pic,setPic] = useState(null)
-    const [basepic,setBasePic] = useState(null)
+    const [image,setImage] = useState(null)
     const { Formik } = formik
     const schema = yup.object().shape({
         name: yup.string().required("此欄位為必填"),
@@ -17,21 +15,16 @@ function StoreRegister() {
         phone: yup.string().required("此欄位為必填"),
         address: yup.string().required("此欄位為必填"),
         email: yup.string().email(),
-       
       });
 
       const handleFileChange = (event) => {
-        const file = event.target.files[0];
-    
+        const file = event.target.files[0]
+        const reader = new FileReader()
+        reader.onloadend = function () {
+          setImage(reader.result)
+        };
         if (file) {
-          const reader = new FileReader();
-    
-          reader.onload = (e) => {
-            const base64Image = btoa(e.target.result);
-            setBasePic({ base64Image });
-          };
-    
-          reader.readAsBinaryString(file);
+          reader.readAsDataURL(file)
         }
       };
 
@@ -44,14 +37,16 @@ function StoreRegister() {
                 phone: values.phone,
                 address: values.address,
                 email: values.email,
-                pic:basepic
+                pic: image,
             }))
             .then((res)=>{
                 if(res.status === 200){
                     alert('註冊成功')
+                    window.location.href('/StoreIndex')
                 }
                 else{
-                    alert('註冊失敗')
+                    alert('註冊失敗，請重新註冊')
+                    window.location.href('/StoreRegister')
                 }
             })
             .catch((err)=>{
@@ -163,10 +158,8 @@ function StoreRegister() {
                             <Form.Control 
                              type="file" 
                              name='pic'
-                             values={pic}
                              onChange={handleFileChange}
-                             accept=".jpg, .jpeg, .png, .gif"
-                             isValid={touched.pic && !errors.pic}
+                             accept=".jpg, .jpeg, .png"
                             />
                             <Form.Control.Feedback type="invalid">
                                 {errors.pic}

@@ -224,7 +224,7 @@ td{
   text-align: center;
 }
 .type-img{
-  width: 50%;
+  width: 80%;
   transition: box-shadow .25s;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 }

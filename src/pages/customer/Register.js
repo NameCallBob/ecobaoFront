@@ -46,6 +46,7 @@ function Register() {
         .then((res)=>{
             if(res.status === 200){
                 console.log('success')
+                AfterofRegisterClickHandler()
             }
         })
         .catch((err)=>{
@@ -55,7 +56,7 @@ function Register() {
     // 註冊後回到商店選擇頁面
     const AfterofRegisterClickHandler = () =>{
         alert("註冊成功")
-        const w=window.open("/LoginPage",'_self')
+        window.open("/LoginPage",'_self')
         // w.location.href="/LoginPage"
     }
 

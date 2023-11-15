@@ -21,6 +21,69 @@ function Store() {
     const [goodinfo, setGoodinfo] = useState(null)
     const [commit, setCommit] = useState(null)
 
+    const foodAllergen = [
+        {
+            "id": "eggs",
+            "label": "蛋"
+        },
+        {
+            "id": "milk",
+            "label": "奶"
+        },
+        {
+            "id": "gluten",
+            "label": "麩質"
+        },
+        {
+            "id": "Glycine-max",
+            "label": "大豆"
+        },
+        {
+            "id": "peanut",
+            "label": "花生"
+        },
+        {
+            "id": "almond",
+            "label": "杏仁"
+        },
+        {
+            "id": "crustaceans",
+            "label": "甲殼類"
+        },
+        {
+            "id": "fish",
+            "label": "魚"
+        },
+        {
+            "id": "mango",
+            "label": "芒果"
+        },
+        {
+            "id": "sesame",
+            "label": "芝麻"
+        },
+        {
+            "id": "pecan",
+            "label": "胡桃"
+        },
+        {
+            "id": "walnut",
+            "label": "核桃"
+        },
+        {
+            "id": "cashew",
+            "label": "腰果"
+        },
+        {
+            "id": "hazelnut",
+            "label": "榛果"
+        },
+        {
+            "id": "SO2",
+            "label": "二氧化硫（亞硫酸鹽）"
+        }
+    ]
+
     
     // 取得目前url位置
     const location = useLocation()
@@ -77,6 +140,25 @@ function Store() {
     const goodsInfoToMeal = (item) =>{
         setModalShow(true)
         setGoodinfo(item)
+    }
+
+    // 英文轉中文
+    const translate = (allergenIds) =>{
+        let a_new = allergenIds.replace(/\'/g,'"');
+        let show = [] //過敏原的Array ; 
+        let show_text = "" ; //過敏原呈現 邏輯：先將確定的過敏原用l包起來再回圈輸出
+        a_new = JSON.parse(a_new)
+        a_new.map(id =>{
+            const allergen = foodAllergen.find(a => a.id === id);
+            show.push(allergen['label'])
+        });
+        for (let i = 1 ; i < show.length ; i++){
+            show_text += show[i] ;
+            if (i !== show.length-1){
+                show_text += '、'
+            }
+        }
+        return show ? show_text : "無過敏原";
     }
 
     useEffect(()=>{
@@ -143,7 +225,7 @@ function Store() {
                                     <Card.Subtitle>剩餘數量：{item.quantity}</Card.Subtitle>
                                     <Card.Text>
                                         <Space size={[0, 10]} wrap>
-                                            <Tag color="red">{item.allergen}</Tag>
+                                            <Tag color="red">{translate(item.allergen)}</Tag>
                                         </Space>
                                         <br/>
                                         ${item.price}
@@ -167,13 +249,17 @@ function Store() {
             <Row>
                 <Col>
                     <h2>來自google評論</h2>
-                    <p>這個ＡＰＩ需要＄，但我沒＄</p>
+                    <p style={{fontSize: 30}}>功能尚未開放，敬請期待～～</p>
                 </Col>
                 <Col>
                     <h2>本平台評論</h2>
-                    {commit && commit.map((item)=>(
-                        <Comment id={item.evaid} name={item.name} star={item.star} explain={item.explain} date={item.date} />
-                    ))}
+                    {commit && commit.length > 0? 
+                        commit.map((item)=>(
+                            <Comment id={item.evaid} name={item.name} star={item.star} explain={item.explain} date={item.date} />
+                        ))
+                    :
+                        <p>暫無評論</p>
+                    }
                 </Col>
             </Row>
         </Container>

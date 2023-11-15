@@ -21,9 +21,8 @@ function StoreAddNewMeal() {
     price: yup.string().required("此項目為必填"),
     ingredient: yup.string().required("此項目為必填"),
   });
-  const [image,setimage] = useState(null)
+  const [image,setImage] = useState(null)
   const datatoback = (values) => {
-    console.log(image)
     Axios().post('/store_data/goods/upload/',JSON.stringify(
         {
             status: false,
@@ -51,7 +50,7 @@ function StoreAddNewMeal() {
     const file = event.target.files[0]
     const reader = new FileReader()
     reader.onloadend = function () {
-      setimage(reader.result)
+      setImage(reader.result)
     };
     if (file) {
       reader.readAsDataURL(file)
@@ -66,7 +65,7 @@ function StoreAddNewMeal() {
         <Row>
             <Col>
             <Formik
-             //validationSchema={schema}
+            //  validationSchema={schema}
              initialValues={{
                 name: '',
                 type: '',
