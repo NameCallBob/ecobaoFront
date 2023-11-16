@@ -9,6 +9,17 @@ function Almost({data, payment}) {
     const [storeName, setStoreName] = useState(null)
     const [storePhone, setStorePhone] = useState(null)
     const [storeAddress, setStoreAddress] = useState(null)
+    const [total, setTotal] = useState(0)
+    console.log(order)
+
+    const calTotal = () =>{
+      let result = 0
+      for (let i = 0; i < data.length; i++) {
+        let element = data[i].subtotal;
+        result = result + element
+      }
+      setTotal(result)
+    }
 
 
 
@@ -31,11 +42,15 @@ function Almost({data, payment}) {
         GetFromBack()
     },[])
     useEffect(()=>{
-        setOrder(data)
-        setStoreName(data[0].store_name)
-        setStorePhone(data.store_phone)
-        setStoreAddress(data.store_address)            
+      if (data && data.length > 0) {
+          setOrder(data)
+          setStoreName(data[0].store_name)
+          setStorePhone(data[0].store_phone)
+          setStoreAddress(data[0].store_address)  
+          calTotal() 
+      }         
     },[data])
+  
 
   return (
     <>
@@ -50,8 +65,8 @@ function Almost({data, payment}) {
       <ListGroup className="list-group-flush">
         <Card.Body>
           <Card.Text>店家：{storeName}</Card.Text>
-          <Card.Text>店家電話：{'wait a minute'}</Card.Text>
-          <Card.Text>店家地址：{'wait a minute'}</Card.Text>    
+          <Card.Text>店家電話：{storePhone}</Card.Text>
+          <Card.Text>店家地址：{storeAddress}</Card.Text>    
         </Card.Body>
       </ListGroup>
       <Card.Body>
@@ -69,7 +84,7 @@ function Almost({data, payment}) {
         </ListGroup>
       </Card.Body>
       <Card.Footer>
-        <Card.Title>{`總金額：$${123}`}</Card.Title>
+        <Card.Title>{`總金額：$${total}`}</Card.Title>
         <Card.Subtitle className='mt-3'>支付方式：{payment}</Card.Subtitle>
       </Card.Footer>
     </Card>

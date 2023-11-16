@@ -217,8 +217,18 @@ td{
 .map{
   height: 20rem;
 }
-.food-type-container{
-  margin-bottom: 1rem; 
+.food-type-list-recommend{
+  text-align: center;
+    .type-content {
+        height: 150px; 
+        text-align: center; 
+        padding: 10px; 
+    }
+
+    .type-img {
+        max-height: 100%; 
+        width: auto;
+    }
 }
 .food-type-list{
   text-align: center;

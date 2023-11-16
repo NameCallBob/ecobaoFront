@@ -25,12 +25,11 @@ function RecommendStore() {
         infinite: false,
         speed: 500,
         slidesToShow: 5,
-        slidesToScroll: 5
+        slidesToScroll: 5,
+        margin: 10
     }
     const handlerOnclick = (e) =>{
-    console.log('ok')
     }
-    console.log(data)
     const getData = () =>{
       Axios().get('/store_sch/prefer/')
       .then((res)=>{
@@ -50,13 +49,15 @@ function RecommendStore() {
     <div className='food-type-container'>
         <h4>推薦店家</h4>
         <div>
-            <div className='food-type-list'>
+            <div className='food-type-list-recommend'>
                 <Slider {...settings}>
                     {data &&
                      data.map((item)=>(
                         <div className='select-type' key={item.upid} onClick={handlerOnclick}>
+                          <div className='type-content'>
                             <Image src={`${serverUrl}${item.pic}`} alt={item.name} className='type-img' rounded/>
                             <span className='food-type-name'>{item.name}</span>
+                          </div>
                         </div>
                      ))
                     }
