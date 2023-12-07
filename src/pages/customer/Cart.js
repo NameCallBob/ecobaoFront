@@ -65,11 +65,11 @@ function Cart() {
   setItemQuantities({ ...itemQuantities, [itemId]: newQuantity });
 
   // 更新 total
-  setTotal(prevTotal => {
+  setTotal(total => {
     // 找出原本的小計
     const prevSubtotal = (itemQuantities[itemId] || 0) * itemPrice;
     // 減去原本的小計，加上新的小計
-    return prevTotal - prevSubtotal + subtotal;
+    return total - prevSubtotal + subtotal;
   });
   }
 
