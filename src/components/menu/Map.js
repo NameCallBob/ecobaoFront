@@ -13,7 +13,6 @@ function Map({data}) {
         googleMapsApiKey: "",
     })
 
-    // AIzaSyClCjdTEaqf5eldD6YM5y4YyOwPw5y7aQo
     // const variable array to save the users location
     const [userLocation, setUserLocation] = useState(null);
     // 設置地圖中心點，init為台北101
